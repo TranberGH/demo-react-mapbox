@@ -1,0 +1,77 @@
+@import './reset';
+@import './variables';
+
+body {
+  font: 1em/1.5 corbel, verdana, sans-serif;
+  color: $text-color;
+}
+
+.app {
+  margin: 2em auto;
+  width: 90%;
+}
+
+.app-header {
+  line-height: 1.2;
+  margin-bottom: 1em;
+}
+
+.app-title {
+  font-size: 1.5em;
+}
+
+.app-subtitle {
+  font-size: 1.3em;
+}
+
+.MuiIcon-fontSizeInherit {
+  font-size: 3em;
+}
+
+.marker-icon {
+  color: #0cc221;
+  cursor: pointer;
+  text-shadow: 0 0 0.1em rgba(0, 0, 0, 0.7);
+}
+
+.map-menu {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  list-style-type: none;
+  background-color: #333;
+  box-shadow: 0 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  border-radius: 0.2em;
+
+  li {
+    padding: 0.2em 0.4em;
+
+    & + li {
+      border-top: 1px solid #666;
+    }
+
+    button {
+      border: none;
+      background: none;
+      vertical-align: middle;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}
+
+.map-menu-icon {
+  color: #fff;
+}
+
+.map-popup {
+  font-size: 0.8em;
+}
+
+.map-popup-title {
+  font-size: 1.1em;
+
+  em {
+    font-size: 1.1em;
+  }
+}
