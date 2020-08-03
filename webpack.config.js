@@ -90,7 +90,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './src/template/index.html',
       appMountId: 'app',
-      title: 'Vianova coding challenge',
+      title: 'Demo React Mapbox',
       mobile: true,
       xhtml: true,
       baseHref: '/',
