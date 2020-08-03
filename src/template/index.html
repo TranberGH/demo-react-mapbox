@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta content="ie=edge" http-equiv="x-ua-compatible" />
-    <base href="/" />
-    <title>Demo React Mapbox</title>
+    <base href="<%= htmlWebpackPlugin.options.baseHref %>" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     </head>
   <body>
-    <div id="app">
+    <div id="<%= htmlWebpackPlugin.options.appMountId %>">
     </div>
   </body>
 </html>
