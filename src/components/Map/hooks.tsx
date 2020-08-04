@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import ReactMapGL, { Popup } from 'react-map-gl';
 
 import { stationToGeometry, districtToGeometry } from '../../core';
 
@@ -10,7 +11,7 @@ interface ZoneGeometry {
 /**
  * Switch popup display
  */
-function usePopup() {
+function usePopup(stations: any) {
   const [currentPopup, setCurrentPopUp] = useState(null);
 
   const showPopup = useCallback((evt: any) => {
@@ -21,7 +22,33 @@ function usePopup() {
     setCurrentPopUp(null);
   }, []);
 
-  return { closePopup, showPopup, currentPopup };
+  const displayPopup = useCallback(() => {
+    let stationInfos = null;
+    // Find current station infos to display
+    if (stations) {
+      stationInfos = stations.features.find((station: any) => {
+        return station.properties.id === currentPopup;
+      });
+    }
+
+    return (
+      stationInfos && (
+        <Popup
+          latitude={stationInfos.geometry.coordinates[1]}
+          longitude={stationInfos.geometry.coordinates[0]}
+          closeButton={false}
+          className="map-popup"
+        >
+          <h4 className="map-popup-title">
+            <em>{stationInfos.properties.title}</em> station
+          </h4>
+          <p>Capacity: {stationInfos.properties.capacity} bikes</p>
+        </Popup>
+      )
+    );
+  }, [currentPopup, stations]);
+
+  return { closePopup, showPopup, currentPopup, displayPopup };
 }
 
 function useDistricts() {
@@ -32,6 +59,9 @@ function useDistricts() {
     setShowDistricts((show) => !show);
   }, [showDistricts]);
 
+  /**
+   * Fetch districts geoJSON data
+   */
   useEffect(() => {
     fetch('https://data.cityofnewyork.us/resource/jp9i-3b7y.json')
       .then((resp) => resp.json())
@@ -62,6 +92,9 @@ function useStations() {
     setShowStations((show) => !show);
   }, [showStations]);
 
+  /**
+   * Fetch geoJSON bikes stations data
+   */
   useEffect(() => {
     fetch('https://gbfs.citibikenyc.com/gbfs/en/station_information.json')
       .then((resp) => resp.json())

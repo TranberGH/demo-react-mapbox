@@ -4,7 +4,6 @@ import ReactMapGL, {
   Layer,
   NavigationControl,
   Marker,
-  Popup,
 } from 'react-map-gl';
 import Icon from '@material-ui/core/Icon';
 
@@ -22,35 +21,11 @@ export default function Map() {
     zoom: 11,
   });
 
-  const { closePopup, showPopup, currentPopup } = usePopup();
   const { districts, showDistricts, switchDistricts } = useDistricts();
   const { stations, showStations, switchStations } = useStations();
-
-  const displayPopup = useCallback(() => {
-    let stationInfos = null;
-    // Find current station infos to display
-    if (stations) {
-      stationInfos = stations.features.find((station: any) => {
-        return station.properties.id === currentPopup;
-      });
-    }
-
-    return (
-      stationInfos && (
-        <Popup
-          latitude={stationInfos.geometry.coordinates[1]}
-          longitude={stationInfos.geometry.coordinates[0]}
-          closeButton={false}
-          className="map-popup"
-        >
-          <h4 className="map-popup-title">
-            <em>{stationInfos.properties.title}</em> station
-          </h4>
-          <p>Capacity: {stationInfos.properties.capacity} bikes</p>
-        </Popup>
-      )
-    );
-  }, [currentPopup, stations]);
+  const { closePopup, showPopup, currentPopup, displayPopup } = usePopup(
+    stations
+  );
 
   return (
     <div className="map-zone-container">
