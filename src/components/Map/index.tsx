@@ -8,7 +8,7 @@ import ReactMapGL, {
 } from 'react-map-gl';
 import Icon from '@material-ui/core/Icon';
 
-import { useGeoData, usePopup } from './hooks';
+import { usePopup, useDistricts, useStations } from './hooks';
 
 /**
  * Map display page
@@ -22,18 +22,9 @@ export default function Map() {
     zoom: 11,
   });
 
-  const { districts, stations } = useGeoData();
   const { closePopup, showPopup, currentPopup } = usePopup();
-
-  const [showDistricts, setShowDistricts] = useState(true);
-  const switchDistricts = useCallback(() => {
-    setShowDistricts((show) => !show);
-  }, [showDistricts]);
-
-  const [showStations, setShowStations] = useState(true);
-  const switchStations = useCallback(() => {
-    setShowStations((show) => !show);
-  }, [showStations]);
+  const { districts, showDistricts, switchDistricts } = useDistricts();
+  const { stations, showStations, switchStations } = useStations();
 
   const displayPopup = useCallback(() => {
     let stationInfos = null;
