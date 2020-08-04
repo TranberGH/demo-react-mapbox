@@ -31,21 +31,26 @@ function usePopup(stations: any) {
       });
     }
 
-    return (
-      stationInfos && (
+    if (stationInfos) {
+      const { title, capacity } = stationInfos.properties;
+      const [longitude, latitude] = stationInfos.geometry.coordinates;
+
+      return (
         <Popup
-          latitude={stationInfos.geometry.coordinates[1]}
-          longitude={stationInfos.geometry.coordinates[0]}
+          latitude={latitude}
+          longitude={longitude}
           closeButton={false}
           className="map-popup"
         >
           <h4 className="map-popup-title">
-            <em>{stationInfos.properties.title}</em> station
+            <em>{title}</em> station
           </h4>
-          <p>Capacity: {stationInfos.properties.capacity} bikes</p>
+          <p>Capacity: {capacity} bikes</p>
         </Popup>
-      )
-    );
+      );
+    }
+
+    return null;
   }, [currentPopup, stations]);
 
   return { closePopup, showPopup, currentPopup, displayPopup };
