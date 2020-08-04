@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import ReactMapGL, { Popup } from 'react-map-gl';
+import { Popup } from 'react-map-gl';
 
 import { stationToGeometry, districtToGeometry } from '../../core';
 
