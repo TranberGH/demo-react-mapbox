@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Popup } from 'react-map-gl';
 
-import { stationToGeometry, districtToGeometry } from '../../core';
-
-interface ZoneGeometry {
-  type: string;
-  features: any[];
-}
+import { DistrictsRepository } from '../../data/districts';
+import { StationsRepository } from '../../data/stations';
 
 /**
  * Switch popup display
@@ -68,22 +64,12 @@ function useDistricts() {
    * Fetch districts geoJSON data
    */
   useEffect(() => {
-    fetch('https://data.cityofnewyork.us/resource/jp9i-3b7y.json')
-      .then((resp) => resp.json())
-      .then((data) => {
-        if (districts === null) {
-          const districtsData: ZoneGeometry = {
-            type: 'FeatureCollection',
-            features: [],
-          };
-
-          data.forEach((district: any) => {
-            districtsData.features.push(districtToGeometry(district));
-          });
-
-          setDistricts(districtsData);
-        }
-      });
+    (async function () {
+      if (districts === null) {
+        const districtsData = await DistrictsRepository.getAll();
+        setDistricts(districtsData);
+      }
+    })();
   });
 
   return { districts, showDistricts, switchDistricts };
@@ -101,21 +87,12 @@ function useStations() {
    * Fetch geoJSON bikes stations data
    */
   useEffect(() => {
-    fetch('https://gbfs.citibikenyc.com/gbfs/en/station_information.json')
-      .then((resp) => resp.json())
-      .then((data) => {
-        if (stations === null) {
-          const stationsData: ZoneGeometry = {
-            type: 'FeatureCollection',
-            features: [],
-          };
-          const rawStations = data.data?.stations;
-          rawStations.forEach((station: any) => {
-            stationsData.features.push(stationToGeometry(station));
-          });
-          setStations(stationsData);
-        }
-      });
+    (async function () {
+      if (stations === null) {
+        const stationsData = await StationsRepository.getAll();
+        setStations(stationsData);
+      }
+    })();
   });
 
   return { stations, showStations, switchStations };
