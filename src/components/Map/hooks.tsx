@@ -56,6 +56,9 @@ function useDistricts() {
   const [districts, setDistricts] = useState<any>(null);
   const [showDistricts, setShowDistricts] = useState(true);
 
+  /**
+   * Switch disticts layer display
+   */
   const switchDistricts = useCallback(() => {
     setShowDistricts((show) => !show);
   }, [showDistricts]);
@@ -64,12 +67,11 @@ function useDistricts() {
    * Fetch districts geoJSON data
    */
   useEffect(() => {
-    (async function () {
-      if (districts === null) {
-        const districtsData = await DistrictsRepository.getAll();
+    if (districts === null) {
+      DistrictsRepository.getAll().then((districtsData) => {
         setDistricts(districtsData);
-      }
-    })();
+      });
+    }
   });
 
   return { districts, showDistricts, switchDistricts };
@@ -79,6 +81,9 @@ function useStations() {
   const [stations, setStations] = useState<any>(null);
   const [showStations, setShowStations] = useState(true);
 
+  /**
+   * Switch stations markers display
+   */
   const switchStations = useCallback(() => {
     setShowStations((show) => !show);
   }, [showStations]);
