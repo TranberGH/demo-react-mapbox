@@ -68,6 +68,7 @@ function useDistricts() {
    */
   useEffect(() => {
     if (districts === null) {
+      // Promise style
       DistrictsRepository.getAll().then((districtsData) => {
         setDistricts(districtsData);
       });
@@ -94,6 +95,7 @@ function useStations() {
   useEffect(() => {
     (async function () {
       if (stations === null) {
+        // async/await style in IIFE
         const stationsData = await StationsRepository.getAll();
         setStations(stationsData);
       }
