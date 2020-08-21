@@ -91,9 +91,12 @@ const config = {
       template: './src/template/index.html',
       appMountId: 'app',
       title: 'Demo React Mapbox',
-      mobile: true,
       xhtml: true,
       baseHref: '/',
+      templateParameters: {
+        mobile: true,
+        lang: 'en',
+      },
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',

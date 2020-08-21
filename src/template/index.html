@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= lang %>">
   <head>
-    <meta charset="utf-8" />
-    <meta content="ie=edge" http-equiv="x-ua-compatible" />
-    <base href="<%= htmlWebpackPlugin.options.baseHref %>" />
+    <meta charset="utf-8"<% if (htmlWebpackPlugin.options.xhtml) { %> /<% } %>>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"<% if (htmlWebpackPlugin.options.xhtml) { %> /<% } %>>
+    <base href="<%= htmlWebpackPlugin.options.baseHref %>"<% if (htmlWebpackPlugin.options.xhtml) { %> /<% } %>>
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <% if(mobile) { %><meta content="width=device-width, initial-scale=1" name="viewport"<% if (htmlWebpackPlugin.options.xhtml) { %> /<% } %>><% } %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"<% if (htmlWebpackPlugin.options.xhtml) { %> /<% } %>>
     </head>
   <body>
     <div id="<%= htmlWebpackPlugin.options.appMountId %>">
