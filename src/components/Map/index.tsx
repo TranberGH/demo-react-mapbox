@@ -7,25 +7,22 @@ import ReactMapGL, {
 } from 'react-map-gl';
 import Icon from '@material-ui/core/Icon';
 
-import { usePopup, useDistricts, useStations } from './hooks';
+import { usePopup, useDistricts, useStations, useViewport } from './hooks';
 
 /**
  * Map display page
  */
 export default function Map() {
-  const [viewport, setViewport] = useState({
+  const { viewport, updateViewport } = useViewport({
     width: 400,
     height: 400,
     longitude: -74,
     latitude: 40.7,
     zoom: 11,
   });
-
   const { districts, showDistricts, switchDistricts } = useDistricts();
   const { stations, showStations, switchStations } = useStations();
-  const { closePopup, showPopup, currentPopup, displayPopup } = usePopup(
-    stations
-  );
+  const { closePopup, showPopup, displayPopup } = usePopup(stations);
 
   return (
     <div className="map-zone-container">
@@ -34,7 +31,7 @@ export default function Map() {
         width="90vw"
         height="80vh"
         mapboxApiAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
-        onViewportChange={(nextViewport: any) => setViewport(nextViewport)}
+        onViewportChange={updateViewport}
       >
         {showDistricts && (
           <Source id="districts" type="geojson" data={districts}>

@@ -103,4 +103,17 @@ function useStations() {
   return { stations, showStations, switchStations };
 }
 
-export { usePopup, useDistricts, useStations };
+function useViewport(initialViewport: any) {
+  const [viewport, setViewport] = useState(initialViewport);
+
+  const updateViewport = useCallback(
+    (nextViewport: any) => {
+      setViewport(nextViewport);
+    },
+    [viewport]
+  );
+
+  return { viewport, updateViewport };
+}
+
+export { usePopup, useDistricts, useStations, useViewport };
